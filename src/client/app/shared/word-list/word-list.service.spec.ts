@@ -4,11 +4,11 @@ import { BaseRequestOptions, ConnectionBackend, Http, HTTP_PROVIDERS, Response, 
 import { MockBackend } from '@angular/http/testing';
 import { Observable } from 'rxjs/Observable';
 
-import { NameListService } from './name-list.service';
+import { WordListService } from './word-list.service';
 
 export function main() {
   describe('NameList Service', () => {
-    let nameListService: NameListService;
+    let wordListService: WordListService;
     let backend: MockBackend;
     let initialResponse: any;
     let providerArr: any[];
@@ -20,7 +20,7 @@ export function main() {
         disableDeprecatedForms(),
         provideForms(),
         HTTP_PROVIDERS,
-        NameListService,
+        WordListService,
         BaseRequestOptions,
         MockBackend,
         provide(Http, {
@@ -30,12 +30,12 @@ export function main() {
           deps: [MockBackend, BaseRequestOptions]
         }),
       ]);
-      nameListService = injector.get(NameListService);
+      wordListService = injector.get(WordListService);
       backend = injector.get(MockBackend);
 
       let connection: any;
       backend.connections.subscribe((c: any) => connection = c);
-      initialResponse = nameListService.get();
+      initialResponse = wordListService.get();
       connection.mockRespond(new Response(new ResponseOptions({ body: '["Dijkstra", "Hopper"]' })));
     });
 

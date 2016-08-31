@@ -22,9 +22,9 @@ export function nameList(app: express.Application) {
   app.get('/api/name-list',
     (req:any, res:any, next:any) => {
 
-      let RedisClient = redis.createClient(),
+      let RedisClient = redis.createClient(6379),
           nameList: string[] = [];
-
+      
       RedisClient.smembers('name-list',
         (err:any, replies:any) => {
           console.log(`

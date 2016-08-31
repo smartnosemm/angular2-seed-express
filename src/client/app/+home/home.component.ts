@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NameListService } from '../shared/index';
+import { WordListService } from '../shared/index';
+import { Word } from '../common/word';
 
 /**
  * This class represents the lazy loaded HomeComponent.
@@ -12,10 +13,9 @@ import { NameListService } from '../shared/index';
 })
 
 export class HomeComponent implements OnInit {
-
-  newName: string = '';
+  
   errorMessage: string;
-  names: any[] = [];
+  words: Word[] = [];
 
   /**
    * Creates an instance of the HomeComponent with the injected
@@ -23,35 +23,37 @@ export class HomeComponent implements OnInit {
    *
    * @param {NameListService} nameListService - The injected NameListService.
    */
-  constructor(public nameListService: NameListService) {}
+  constructor(public wordListService: WordListService) {}
 
   /**
    * Get the names OnInit
    */
   ngOnInit() {
-    this.getNames();
+    this.getWords();
   }
 
   /**
    * Handle the nameListService observable
    */
-  getNames() {
-    this.nameListService.get()
+  getWords() {
+    this.wordListService.get()
       .subscribe(
-        names => this.names = names,
+        words => this.words = words,
         error =>  this.errorMessage = <any>error
     );
   }
 
   /**
    * Pushes a new name onto the names array
-   * @return {boolean} false to prevent default form submit behavior to refresh the page.
    */
-  addName(): boolean {
-    // TODO: implement nameListService.post
-    this.names.push(this.newName);
-    this.newName = '';
-    return false;
+  addWord(name: string) {
+    if (!name) { return; }
+
+    this.wordListService.addWord(name)
+                        .subscribe(
+                          word => this.words.push(word),
+                          error => this.errorMessage = <any>error
+                        );
   }
 
 }

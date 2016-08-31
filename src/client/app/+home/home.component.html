@@ -2,11 +2,21 @@
   Howdy! Here's a list of awesome computer scientists. Do you know any others? Add to the list yourself.
 </p>
 
+
+<!--
 <form (submit)="addName()">
   <input [(ngModel)]="newName" name="newName" placeholder="Awesome Computer Scientist">
   <button type="submit">Add</button>
 </form>
+-->
+
+
+<input #newWord />
+<button (click)="addWord(newWord.value); newWord.value=''">
+  Add
+</button>
+
 
 <ul>
-  <li *ngFor="let name of names">{{name}}</li>
+  <li *ngFor="let word of words">{{word}}</li>
 </ul>
