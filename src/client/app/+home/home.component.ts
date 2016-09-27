@@ -51,7 +51,7 @@ export class HomeComponent implements OnInit {
 
     this.wordListService.addWord(name)
                         .subscribe(
-                          word => this.words.push(word),
+                          () => this.words.push(new Word(name, '')),
                           error => this.errorMessage = <any>error
                         );
   }

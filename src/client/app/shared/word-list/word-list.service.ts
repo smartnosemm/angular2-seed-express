@@ -40,7 +40,7 @@ export class WordListService {
     let options = new RequestOptions({ headers: headers });   
 
     return this.http.post(`${Config.API}/api/name-list`, body, options)
-                    .map(this.extractData)
+                    //.map(this.extractData)
                     .catch(this.handleError);
   }
 

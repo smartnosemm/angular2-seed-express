@@ -1,5 +1,6 @@
 import * as express from 'express';
 import * as redis from 'redis';
+import { Word } from '../data/word';
 
 let nameData = require('../data/name.list.json');
 
@@ -23,15 +24,15 @@ export function nameList(app: express.Application) {
     (req:any, res:any, next:any) => {
 
       let RedisClient = redis.createClient(6379),
-          nameList: string[] = [];
+          wordList: string[] = [];
       
-      RedisClient.smembers('name-list',
+      RedisClient.smembers('word-list',
         (err:any, replies:any) => {
           console.log(`
           Reply length: ${replies.length}. 
           Reply: ${replies}.`);
-          nameList = replies;
-          res.json(nameList);
+          wordList = replies;
+          res.json(wordList);
       });
 
       RedisClient.quit();
