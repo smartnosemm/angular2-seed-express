@@ -6,7 +6,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
 import { Config } from '../index';
-import { Word } from '../../common/word';
+import { Word } from '../../../../shared/word';
 
 /**
  * This class provides the NameList service with methods to read names and add names.

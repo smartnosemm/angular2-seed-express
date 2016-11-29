@@ -132,6 +132,13 @@ export class SeedConfig {
   APP_SERVER = argv['server'] || 'server';
 
   /**
+   * The directory where the shared files are located.
+   * The default directory is `shared`
+   * @type {string}
+   */
+  APP_SHARED = argv['shared'] || 'shared';
+
+  /**
    * The bootstrap file to be used to boot the application. The file to be used is dependent if the hot-loader option is
    * used or not.
    * Per default (non hot-loader mode) the `main.ts` file will be used, with the hot-loader option enabled, the
@@ -158,6 +165,12 @@ export class SeedConfig {
    * @type {string}
    */
   APP_SERVER_SRC = `src/${this.APP_SERVER}`;
+
+  /**
+   * The folder of the shared source files.
+   * @type {string}
+   */
+  APP_SHARED_SRC = `src/${this.APP_SHARED}`;
 
   /**
    * The folder of the applications asset files.
@@ -219,6 +232,18 @@ export class SeedConfig {
   PROD_SERVER_DEST = `${this.DIST_DIR}/prod/${this.APP_SERVER}`;
 
   /**
+   * The folder for build shared files in the `dev` environment.
+   * @type {string}
+   */
+  DEV_SHARED_DEST = `${this.DIST_DIR}/dev/${this.APP_SHARED}`;
+
+  /**
+   * The folder for build shared files in the `prod` environment.
+   * @type {string}
+   */
+  PROD_SHARED_DEST = `${this.DIST_DIR}/prod/${this.APP_SHARED}`;
+
+  /**
    * The folder for client temporary files.
    * @type {string}
    */
@@ -241,6 +266,12 @@ export class SeedConfig {
    * @type {string}
    */
   APP_SERVER_DEST = this.ENV === ENVIRONMENTS.DEVELOPMENT ? this.DEV_SERVER_DEST : this.PROD_SERVER_DEST;
+
+  /**
+   * The folder for the build server files, corresponding to the current environment.
+   * @type {string}
+   */
+  APP_SHARED_DEST = this.ENV === ENVIRONMENTS.DEVELOPMENT ? this.DEV_SHARED_DEST : this.PROD_SHARED_DEST;
 
   /**
    * The folder for the built CSS files.

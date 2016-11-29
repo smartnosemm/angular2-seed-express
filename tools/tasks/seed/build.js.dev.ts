@@ -4,7 +4,7 @@ import * as merge from 'merge-stream';
 import * as util from 'gulp-util';
 import { join/*, sep, relative*/ } from 'path';
 
-import { APP_CLIENT_DEST, APP_CLIENT_SRC, /*PROJECT_ROOT, */TOOLS_DIR, TYPED_COMPILE_INTERVAL } from '../../config';
+import { APP_CLIENT_DEST, APP_CLIENT_SRC, APP_SHARED_SRC, /*PROJECT_ROOT, */TOOLS_DIR, TYPED_COMPILE_INTERVAL } from '../../config';
 import { makeTsProject, templateLocals } from '../../utils';
 
 const plugins = <any>gulpLoadPlugins();

@@ -4,7 +4,7 @@ import * as merge from 'merge-stream';
 import * as util from 'gulp-util';
 import { join } from 'path';
 
-import { APP_SERVER_DEST, APP_SERVER_SRC, APP_SHARED_SRC, APP_SHARED_DEST, TOOLS_DIR, TYPED_COMPILE_INTERVAL } from '../../config';
+import { APP_SHARED_SRC, APP_SHARED_DEST, TOOLS_DIR, TYPED_COMPILE_INTERVAL } from '../../config';
 import { makeTsProject, templateLocals } from '../../utils';
 
 const plugins = <any>gulpLoadPlugins();
@@ -22,9 +22,9 @@ export = () => {
     TOOLS_DIR + '/manual_typings/**/*.d.ts'
   ]);
   let src = [
-    join(APP_SERVER_SRC, '**/*.ts'),
-    '!' + join(APP_SERVER_SRC, '**/*.spec.ts'),
-    '!' + join(APP_SERVER_SRC, '**/*.e2e-spec.ts')
+    join(APP_SHARED_SRC, '**/*.ts'),
+    '!' + join(APP_SHARED_SRC, '**/*.spec.ts'),
+    '!' + join(APP_SHARED_SRC, '**/*.e2e-spec.ts')
   ];
   
   let projectFiles = gulp.src(src);
@@ -61,5 +61,5 @@ export = () => {
   return result.js
     .pipe(plugins.sourcemaps.write())
     .pipe(plugins.template(templateLocals()))
-    .pipe(gulp.dest(APP_SERVER_DEST));
+    .pipe(gulp.dest(APP_SHARED_DEST));
 };

@@ -21,6 +21,7 @@ gulp.task('build.dev', (done: any) =>
               'build.js.dev',
               'build.index.dev',
               'build.server.dev',
+              'build.shared.dev',
               'copy.server.assets',
               done));
 

@@ -1,6 +1,6 @@
 import * as express from 'express';
 import * as redis from 'redis';
-import { Word } from '../data/word';
+//import { Word } from '../../shared/word';
 
 let nameData = require('../data/name.list.json');
 

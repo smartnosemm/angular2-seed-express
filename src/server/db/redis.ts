@@ -1,5 +1,5 @@
 import * as redis from 'redis';
-import { Word } from '../data/word';
+import { Word } from '../../shared/word';
 
 /**
  * Init Names List.
@@ -8,7 +8,7 @@ export function Init() {
 
   let RedisClient = redis.createClient();
 
-  RedisClient.zadd("simple-word-list",
+  RedisClient.sadd("word-index",
     "longanimity",
     "eutaxy",
     redis.print);

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { WordListService } from '../shared/index';
-import { Word } from '../common/word';
+import { Word } from '../../../shared/word';
 
 /**
  * This class represents the lazy loaded HomeComponent.
@@ -16,6 +16,7 @@ export class HomeComponent implements OnInit {
   
   errorMessage: string;
   words: Word[] = [];
+  self = this;
 
   /**
    * Creates an instance of the HomeComponent with the injected
