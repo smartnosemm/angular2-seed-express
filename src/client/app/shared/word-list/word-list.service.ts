@@ -27,7 +27,10 @@ export class WordListService {
    */
   get(): Observable<Word[]> {
     return this.http.get(`${Config.API}/api/name-list`)
-                    .map((res: Response) => res.json())
+                    .map((res: Response) => {
+                      return res.json();
+                      }
+                    )
                     .catch(this.handleError);
   }
 

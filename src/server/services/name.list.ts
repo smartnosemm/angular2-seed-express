@@ -24,14 +24,14 @@ export function nameList(app: express.Application) {
     (req:any, res:any, next:any) => {
 
       let RedisClient = redis.createClient(6379),
-          wordList: string[] = [];
+          wordList: Word[] = [];
       
       RedisClient.smembers('word-list',
         (err:any, replies:any) => {
           console.log(`
           Reply length: ${replies.length}. 
           Reply: ${replies}.`);
-          wordList = replies;
+          wordList = replies.map(JSON.parse);
           res.json(wordList);
       });
 

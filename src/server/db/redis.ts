@@ -8,7 +8,7 @@ export function Init() {
 
   let RedisClient = redis.createClient();
 
-  RedisClient.zadd("simple-word-list",
+  RedisClient.sadd("simple-word-list",
     "longanimity",
     "eutaxy",
     redis.print);
