@@ -15,7 +15,7 @@ import { Word } from '../common/word';
 export class HomeComponent implements OnInit {
   
   errorMessage: string;
-  words: Word[] = [];
+  words: string[] = [];
 
   /**
    * Creates an instance of the HomeComponent with the injected
@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit {
    * Handle the nameListService observable
    */
   getWords() {
-    this.wordListService.get()
+    this.wordListService.getWords()
       .subscribe(
         words => this.words = words,
         error =>  this.errorMessage = <any>error
@@ -44,14 +44,42 @@ export class HomeComponent implements OnInit {
   }
 
   /**
-   * Pushes a new name onto the names array
+   * Pushes a new word onto the words array
    */
   addWord(name: string) {
     if (!name) { return; }
 
     this.wordListService.addWord(name)
                         .subscribe(
-                          () => this.words.push(new Word(name, '')),
+                          () => this.words.push(name),
+                          error => this.errorMessage = <any>error
+                        );
+  }
+
+  /**
+   * Update the word information
+   */
+  updateWord(name: string) {
+    this.wordListService.updateWord(name)
+                        .subscribe(
+                          error => this.errorMessage = <any>error
+                        );
+  }
+
+  /**
+   * Delete a word from the words array
+   */
+  deleteWord(name: string) {
+    var words = this.words;
+
+    this.wordListService.deleteWord(name)
+                        .subscribe(
+                          data => {
+                            var index = words.indexOf(name);
+                            if (index > -1) {
+                              words.splice(index, 1);
+                            }
+                          },
                           error => this.errorMessage = <any>error
                         );
   }

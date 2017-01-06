@@ -8,15 +8,13 @@ export function Init() {
 
   let RedisClient = redis.createClient();
 
-  RedisClient.sadd("simple-word-list",
+  RedisClient.sadd("word-list",
     "longanimity",
     "eutaxy",
     redis.print);
 
-  RedisClient.sadd("word-list",
-    JSON.stringify(new Word ("longanimity", "Patient endurance")),
-    JSON.stringify(new Word ("eutaxy", "good order or management")),
-    redis.print);
+  RedisClient.set("longanimity", JSON.stringify(new Word ("longanimity", "Patient endurance")), redis.print);
+  RedisClient.set("eutaxy", JSON.stringify(new Word ("eutaxy", "good order or management")), redis.print);
 
   RedisClient.quit();
 }

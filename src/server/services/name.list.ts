@@ -24,16 +24,15 @@ export function nameList(app: express.Application) {
     (req:any, res:any, next:any) => {
 
       let RedisClient = redis.createClient(6379),
-          wordList: Word[] = [];
+          wordList: string[] = [];
       
       RedisClient.smembers('word-list',
         (err:any, replies:any) => {
-          console.log(`
-          Reply length: ${replies.length}. 
-          Reply: ${replies}.`);
-          wordList = replies.map(JSON.parse);
+          //wordList = replies.map(JSON.parse);
+          wordList = replies;
           res.json(wordList);
       });
+
 
       RedisClient.quit();
     });
@@ -47,40 +46,55 @@ export function nameList(app: express.Application) {
 
       let RedisClient = redis.createClient(),
           request = req.body;
-          // request = JSON.parse(req.body);
-
-      RedisClient.sadd('name-list', request.name,
+      
+      // Add word to aggregate table
+      RedisClient.sadd('word-list', request,
         (err:any, replies:any) => {
-          console.log(`
-          Reply: ${replies}.`);
+          if (err) {
+            RedisClient.quit();
+            return res.send(err);
+          }
 
-          res.json({success: true});
-        });
-
-      RedisClient.quit();
+          RedisClient.set(request, JSON.stringify(new Word (request, "Waiting for definition...")), 
+            (err:any, replies:any) => {
+              if (err) {
+                RedisClient.quit();
+                return res.send(err);
+              }
+            	res.json({success: true});
+              RedisClient.quit();
+            });
+        });     
     });
 
   /**
    * Delete name.
    * @database
    */
-  app.delete('/api/name-list',
+  app.post('/api/name-list/:name',
     (req:any, res:any, next:any) => {
 
       let RedisClient = redis.createClient(),
-          request = req.body;
-          // request = JSON.parse(req.body);
+          request = req.params.name;
+          
 
-      RedisClient.srem('name-list', request.name,
+      RedisClient.srem('word-list', request,
         (err:any, replies:any) => {
-          console.log(`
-          Reply length: ${replies.length}. 
-          Reply: ${replies}.`);
+          if (err) {
+            RedisClient.quit();
+            return res.send(err);
+          }
 
-          res.json({success: true});
+          RedisClient.del(request,
+            (err:any, replies:any) => {
+              if (err) {
+                RedisClient.quit();
+                return res.send(err);
+              }
+              res.json({success: true});
+              RedisClient.quit();
+            });
         });
-
-      RedisClient.quit();
     });
 
 }

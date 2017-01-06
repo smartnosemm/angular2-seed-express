@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
-import { Headers, RequestOptions } from '@angular/http';
+import { Headers, RequestOptions, RequestOptionsArgs, RequestMethod } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -25,12 +25,9 @@ export class WordListService {
    * Returns an Observable for the HTTP GET request for the JSON resource.
    * @return {string[]} The Observable for the HTTP request.
    */
-  get(): Observable<Word[]> {
+  getWords(): Observable<string[]> {
     return this.http.get(`${Config.API}/api/name-list`)
-                    .map((res: Response) => {
-                      return res.json();
-                      }
-                    )
+                    .map(this.extractData)
                     .catch(this.handleError);
   }
 
@@ -38,18 +35,48 @@ export class WordListService {
    * 
    */
   addWord(name: string): Observable<Word> {
-    let body = JSON.stringify({ name });
-    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let body = name;
+    let headers = new Headers({ 'Content-Type': 'text/plain' });
     let options = new RequestOptions({ headers: headers });   
 
     return this.http.post(`${Config.API}/api/name-list`, body, options)
-                    //.map(this.extractData)
+                    .map(this.extractData)
+                    .catch(this.handleError);
+  }
+
+  /**
+   * 
+   */
+  /*
+  deleteWord(name: string): Observable<Word> {
+    let headers = new Headers({ 'Content-Type': 'text/plain' });
+    //headers.append('body', name);
+    let body = name;
+    //let options = new RequestOptions({ headers: headers });
+    let options = <RequestOptionsArgs>{ 
+    body: body,
+    method: RequestMethod.Delete
+  };
+
+    return this.http.delete(`${Config.API}/api/name-list/${name}`, options)
+                    .map(this.extractData)
+                    .catch(this.handleError);
+  }
+  */
+
+  deleteWord(name: string): Observable<Word> {
+    let body = name;
+    let headers = new Headers({ 'Content-Type': 'text/plain' });
+    let options = new RequestOptions({ headers: headers });   
+
+    return this.http.post(`${Config.API}/api/name-list/${name}`, body, options)
+                    .map(this.extractData)
                     .catch(this.handleError);
   }
 
   private extractData(res: Response) {
     let body = res.json();
-    return body.data || { };
+    return body || { };
   }
 
   /**
