@@ -59,12 +59,14 @@ export class HomeComponent implements OnInit {
   /**
    * Update the word information
    */
+  /*
   updateWord(name: string) {
     this.wordListService.updateWord(name)
                         .subscribe(
                           error => this.errorMessage = <any>error
                         );
   }
+  */
 
   /**
    * Delete a word from the words array

@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { routes } from './app.routes';
+//import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AboutModule } from './+about/about.module';
 import { HomeModule } from './+home/home.module';

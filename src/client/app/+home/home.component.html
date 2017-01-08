@@ -16,7 +16,7 @@
   Add
 </button>
 
-<table>
+<div style="position:absolute; color:blue;">
   <div *ngFor="let word of words">
     <div class="col-md-7">
       {{word}}
@@ -26,4 +26,4 @@
     <input type="button" (click)="deleteWord(word)" value="delete" class="btn btn-danger">
     
   </div>
-</table>
+</div>
