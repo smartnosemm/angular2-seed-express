@@ -1,29 +1,43 @@
-<p>
-  Let's learn new word!
-</p>
+<div class = "container">
+  <h2>My dictionary</h2>
+  <p>
+    Let's learn new word!
+  </p>
 
-
-<!--
-<form (submit)="addName()">
-  <input [(ngModel)]="newName" name="newName" placeholder="Awesome Computer Scientist">
-  <button type="submit">Add</button>
-</form>
--->
-
-
-<input #newWord />
-<button (click)="addWord(newWord.value); newWord.value=''">
-  Add
-</button>
-
-<div style="position:absolute; color:blue;">
-  <div *ngFor="let word of words">
-    <div class="col-md-7">
-      {{word}}
+  <div style = "padding: 10px 10px 10px;">
+      <input #newWord />
+      <button (click)="addWord(newWord.value); newWord.value=''">
+        Add
+      </button>
     </div>
 
-    <!-- <input type="button" (click)="updateWord(word)" value="update" class="btn"> -->
-    <input type="button" (click)="deleteWord(word)" value="delete" class="btn btn-danger">
-    
-  </div>
+
+  <table class = "table">
+    <!--
+    <form (submit)="addName()">
+      <input [(ngModel)]="newName" name="newName" placeholder="Awesome Computer Scientist">
+      <button type="submit">Add</button>
+    </form>
+    -->
+
+    <thead>
+      <tr>
+        <th>Word</th>
+        <th>Visited</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let word of words">
+          <td class="col-md-4">{{word}}</td>
+          <td>1</td>
+          <td>
+            <input type="button" (click)="deleteWord(word)" value="delete" class="btn btn-danger btn-block">
+          </td>
+      </tr>
+    </tbody>
+  </table>
+
+
 </div>

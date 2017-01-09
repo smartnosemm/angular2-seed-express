@@ -7,7 +7,7 @@ import {
 import { Observable } from 'rxjs/Observable';
 
 import { HomeComponent } from './home.component';
-import { NameListService } from '../shared/index';
+import { WordListService } from '../shared/index';
 
 export function main() {
   describe('Home component', () => {
@@ -18,7 +18,7 @@ export function main() {
         imports: [FormsModule],
         declarations: [HomeComponent],
         providers: [
-          { provide: NameListService, useValue: new MockNameListService() }
+          { provide: WordListService, useValue: new MockNameListService() }
         ]
       });
 
@@ -32,7 +32,7 @@ export function main() {
             let fixture = TestBed.createComponent(HomeComponent);
             let homeInstance = fixture.debugElement.componentInstance;
             let homeDOMEl = fixture.debugElement.nativeElement;
-            let mockNameListService = <MockNameListService>fixture.debugElement.injector.get(NameListService);
+            let mockNameListService = <MockNameListService>fixture.debugElement.injector.get(WordListService);
             let nameListServiceSpy = spyOn(mockNameListService, 'get').and.callThrough();
 
             mockNameListService.returnValue = ['1', '2', '3'];
