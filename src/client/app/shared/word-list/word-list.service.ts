@@ -31,12 +31,18 @@ export class WordListService {
 
   /**
    * Returns an Observable for the HTTP GET request for the JSON resource.
-   * @return {string[]} The Observable for the HTTP request.
+   * @return {Word[]} The Observable for the HTTP request.
    */
-  getWords(): Observable<string[]> {
+  getWords(): Observable<Word[]> {
     return this.http.get(`${Config.API}/api/name-list`)
-                    .map(this.extractData)
+                    .map(this.extractArrayData)
                     .catch(this.handleError);
+  }
+
+  private extractArrayData(res: Response) {
+    let body = res.json();
+    body = body.map(JSON.parse);
+    return body || { };
   }
 
   /**

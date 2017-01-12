@@ -24,15 +24,28 @@ export function nameList(app: express.Application) {
     (req:any, res:any, next:any) => {
 
       let RedisClient = redis.createClient(),
-          wordList: string[] = [];
-
+          wordList: string[] = [],
+          wordFullList: Word[] = [],
+          counter: number;
+      
       RedisClient.smembers('word-list',
         (err:any, replies:any) => {
           wordList = replies;
-          res.json(wordList);
-      });
+          counter = wordList.length;
 
-      RedisClient.quit();
+          for (let word of wordList) {
+            RedisClient.get(word, 
+              (err:any, replies:any) => {
+                wordFullList.push(replies);
+                counter--;
+                if (counter <= 0) {
+                  res.json(wordFullList);
+                  RedisClient.quit();
+                };
+              }
+            );
+          };      
+      });
     });
 
   /**
@@ -53,7 +66,7 @@ export function nameList(app: express.Application) {
             return res.send(err);
           }
 
-          RedisClient.set(request, JSON.stringify(new Word (request, "Waiting for definition...")), 
+          RedisClient.set(request, JSON.stringify(new Word (request, "Waiting for definition...", 1)), 
             (err:any, replies:any) => {
               if (err) {
                 RedisClient.quit();

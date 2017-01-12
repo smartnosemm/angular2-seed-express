@@ -13,8 +13,8 @@ export function Init() {
     "eutaxy",
     redis.print);
 
-  RedisClient.set("longanimity", JSON.stringify(new Word ("longanimity", "Patient endurance")), redis.print);
-  RedisClient.set("eutaxy", JSON.stringify(new Word ("eutaxy", "good order or management")), redis.print);
+  RedisClient.set("longanimity", JSON.stringify(new Word ("longanimity", "Patient endurance", 1)), redis.print);
+  RedisClient.set("eutaxy", JSON.stringify(new Word ("eutaxy", "good order or management", 1)), redis.print);
 
   RedisClient.quit();
 }

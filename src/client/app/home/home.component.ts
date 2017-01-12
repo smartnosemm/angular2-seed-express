@@ -14,7 +14,7 @@ import { Word } from '../common/word';
 export class HomeComponent implements OnInit {
 
   errorMessage: string;
-  words: string[] = [];
+  words: Word[] = [];
 
   /**
    * Creates an instance of the HomeComponent with the injected
@@ -51,7 +51,7 @@ export class HomeComponent implements OnInit {
 
     this.wordListService.addWord(name)
                         .subscribe(
-                          () => this.words.push(name),
+                          //() => this.words.push(name),
                           error => this.errorMessage = <any>error
                         );
     return false;
@@ -73,7 +73,7 @@ export class HomeComponent implements OnInit {
    * Delete a word from the words array
    */
   deleteWord(name: string) {
-    var words = this.words;
+    var words = ["eutaxy"];
 
     this.wordListService.deleteWord(name)
                         .subscribe(

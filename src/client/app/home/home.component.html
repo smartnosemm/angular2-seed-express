@@ -30,14 +30,13 @@
 
     <tbody>
       <tr *ngFor="let word of words">
-          <td class="col-md-4">{{word}}</td>
-          <td>1</td>
+          <td class="col-md-4">{{word.name}}</td>
+          <td>{{word.visitedTimes}}</td>
           <td>
             <input type="button" (click)="deleteWord(word)" value="delete" class="btn btn-danger btn-block">
           </td>
       </tr>
     </tbody>
   </table>
-
 
 </div>
