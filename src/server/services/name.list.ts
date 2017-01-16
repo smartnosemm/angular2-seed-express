@@ -52,21 +52,21 @@ export function nameList(app: express.Application) {
    * Add new name.
    * @database
    */
-  app.post('/api/name-list',
+  app.post('/api/name-list/add/:name',
     (req:any, res:any, next:any) => {
 
       let RedisClient = redis.createClient(),
           request = req.body;
 
       // Add word to aggregate table
-      RedisClient.sadd('word-list', request,
+      RedisClient.sadd('word-list', request.name,
         (err:any, replies:any) => {
           if (err) {
             RedisClient.quit();
             return res.send(err);
           }
-
-          RedisClient.set(request, JSON.stringify(new Word (request, "Waiting for definition...", 1)), 
+          
+          RedisClient.set(request.name, JSON.stringify(request),  
             (err:any, replies:any) => {
               if (err) {
                 RedisClient.quit();
@@ -75,28 +75,50 @@ export function nameList(app: express.Application) {
             	res.json({success: true});
               RedisClient.quit();
             });
+        });                  
+    });
+  
+  /**
+   * Update word.
+   * @database
+   */
+  app.post('/api/name-list/update/:name',
+    (req:any, res:any, next:any) => {
+
+      let RedisClient = redis.createClient(),
+          request = req.body;
+
+      RedisClient.set(request.name, JSON.stringify(request),  
+        (err:any, replies:any) => {
+          if (err) {
+            RedisClient.quit();
+            return res.send(err);
+          }
+          res.json({success: true});
         });  
+
+      RedisClient.quit();      
     });
 
   /**
    * Delete name.
    * @database
    */
-  app.post('/api/name-list/:name',
+  app.post('/api/name-list/delete/:name',
     (req:any, res:any, next:any) => {
 
       let RedisClient = redis.createClient(),
-          request = req.params.name;
+          request = req.body;
           
 
-      RedisClient.srem('word-list', request,
+      RedisClient.srem('word-list', request.name,
         (err:any, replies:any) => {
           if (err) {
             RedisClient.quit();
             return res.send(err);
           }
 
-          RedisClient.del(request,
+          RedisClient.del(request.name,
             (err:any, replies:any) => {
               if (err) {
                 RedisClient.quit();

@@ -14,7 +14,7 @@ import { Word } from '../common/word';
 export class HomeComponent implements OnInit {
 
   errorMessage: string;
-  words: Word[] = [];
+  wordList: Word[] = [];
 
   /**
    * Creates an instance of the HomeComponent with the injected
@@ -37,9 +37,13 @@ export class HomeComponent implements OnInit {
   getWords() {
     this.wordListService.getWords()
       .subscribe(
-        words => this.words = words,
+        words => this.wordList = words,
         error =>  this.errorMessage = <any>error
     );
+  }
+
+  getWord(name: string) {
+    return this.wordList.filter(word => word.name == name)[0];
   }
 
   /**
@@ -49,38 +53,40 @@ export class HomeComponent implements OnInit {
   addWord(name: string): boolean {
     if (!name) { return true; }
 
-    this.wordListService.addWord(name)
+    let workingWord = this.getWord(name);
+
+    if (workingWord == null) {
+      workingWord = new Word (name, "Waiting for definition...", 1);
+      this.wordListService.addWord(workingWord)
                         .subscribe(
-                          //() => this.words.push(name),
+                          () => this.wordList.push(workingWord),
                           error => this.errorMessage = <any>error
                         );
+    }
+    else {
+      workingWord.frequency++;
+      this.wordListService.updateWord(workingWord)
+                          .subscribe(
+                            error => this.errorMessage = <any>error 
+                          );
+    };
     return false;
   }
 
   /**
-   * Update the word information
-   */
-  /*
-  updateWord(name: string) {
-    this.wordListService.updateWord(name)
-                        .subscribe(
-                          error => this.errorMessage = <any>error
-                        );
-  }
-  */
-
-  /**
    * Delete a word from the words array
+   * TODO
    */
   deleteWord(name: string) {
-    var words = ["eutaxy"];
+    let deleteWord = this.getWord(name);
+    if (deleteWord == null) return;
 
-    this.wordListService.deleteWord(name)
+    this.wordListService.deleteWord(deleteWord)
                         .subscribe(
                           data => {
-                            var index = words.indexOf(name);
+                            var index = this.wordList.indexOf(deleteWord);
                             if (index > -1) {
-                              words.splice(index, 1);
+                              this.wordList.splice(index, 1);
                             }
                           },
                           error => this.errorMessage = <any>error

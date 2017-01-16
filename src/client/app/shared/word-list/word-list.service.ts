@@ -48,12 +48,12 @@ export class WordListService {
   /**
    * 
    */
-  addWord(name: string): Observable<Word> {
-    let body = name;
-    let headers = new Headers({ 'Content-Type': 'text/plain' });
+  addWord(word: Word): Observable<Word> {
+    let body = JSON.stringify(word);
+    let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });   
 
-    return this.http.post(`${Config.API}/api/name-list`, body, options)
+    return this.http.post(`${Config.API}/api/name-list/add/${word.name}`, body, options)
                     .map(this.extractData)
                     .catch(this.handleError);
   }
@@ -62,29 +62,23 @@ export class WordListService {
   /**
    * 
    */
-  /*
-  deleteWord(name: string): Observable<Word> {
-    let headers = new Headers({ 'Content-Type': 'text/plain' });
-    //headers.append('body', name);
-    let body = name;
-    //let options = new RequestOptions({ headers: headers });
-    let options = <RequestOptionsArgs>{ 
-    body: body,
-    method: RequestMethod.Delete
-  };
+  updateWord(word: Word): Observable<Word> {
+    let body = JSON.stringify(word);
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });   
 
-    return this.http.delete(`${Config.API}/api/name-list/${name}`, options)
+    return this.http.post(`${Config.API}/api/name-list/update/${word.name}`, body, options)
                     .map(this.extractData)
                     .catch(this.handleError);
   }
-  */
+  
 
-  deleteWord(name: string): Observable<Word> {
-    let body = name;
-    let headers = new Headers({ 'Content-Type': 'text/plain' });
+  deleteWord(word: Word): Observable<Word> {
+    let body = JSON.stringify(word);
+    let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });   
 
-    return this.http.post(`${Config.API}/api/name-list/${name}`, body, options)
+    return this.http.post(`${Config.API}/api/name-list/delete/${word.name}`, body, options)
                     .map(this.extractData)
                     .catch(this.handleError);
   }

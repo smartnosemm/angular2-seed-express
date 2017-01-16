@@ -29,11 +29,11 @@
     </thead>
 
     <tbody>
-      <tr *ngFor="let word of words">
+      <tr *ngFor="let word of wordList">
           <td class="col-md-4">{{word.name}}</td>
-          <td>{{word.visitedTimes}}</td>
+          <td>{{word.frequency}}</td>
           <td>
-            <input type="button" (click)="deleteWord(word)" value="delete" class="btn btn-danger btn-block">
+            <input type="button" (click)="deleteWord(word.name)" value="delete" class="btn btn-danger btn-block">
           </td>
       </tr>
     </tbody>
