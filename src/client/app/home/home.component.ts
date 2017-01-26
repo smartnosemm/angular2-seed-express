@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { WordListService } from '../shared/index';
+import { Observable } from 'rxjs/Observable';
 import { Word } from '../common/word';
 
 /**
@@ -15,6 +16,7 @@ export class HomeComponent implements OnInit {
 
   errorMessage: string;
   wordList: Word[] = [];
+  currentWord: null;
 
   /**
    * Creates an instance of the HomeComponent with the injected
@@ -46,11 +48,64 @@ export class HomeComponent implements OnInit {
     return this.wordList.filter(word => word.name == name)[0];
   }
 
+  getWordDefinition(word_id: string): Observable<any> {
+    return Observable.create((observer: any) => {
+      let language = "en";
+      let xhttp = new XMLHttpRequest();
+      let url = "https://od-api.oxforddictionaries.com:443/api/v1/entries/" + language + "/" + word_id.toLowerCase();
+
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          observer.next(JSON.parse(this.responseText));
+          observer.complete();
+        }
+      };
+
+      xhttp.open("GET", url, true);
+      xhttp.setRequestHeader("Content-type", "application/json");
+      xhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
+      xhttp.setRequestHeader("app_id", "f1ef29a5");
+      xhttp.setRequestHeader("app_key", "cde3ef48929219d1c17d530986b97fb4");
+      xhttp.send();
+    });
+  }
+
+  addWord(name: string): boolean {
+    if (!name) { return true; }
+
+    let workingWord = this.getWord(name);
+    let wordDefinition: Object;
+    let self = this;
+
+    if (workingWord == null) {
+      self.getWordDefinition(name)
+                        .subscribe(
+                          response => {
+                            wordDefinition = response.results[0];
+                            workingWord = new Word(name, response.results[0], 1);
+                            self.wordListService.addWord(workingWord)
+                                              .subscribe(
+                                                () => self.wordList.push(workingWord),
+                                                error => self.errorMessage = <any>error
+                                              )
+                          });
+    }
+    else {
+      workingWord.frequency++;
+      self.wordListService.updateWord(workingWord)
+                          .subscribe(
+                            error => self.errorMessage = <any>error 
+                          );
+    };
+    
+    return false;
+  }
+
   /**
    * Pushes a new word onto the words array
    * @return {boolean} false to prevent default form submit behavior to refresh the page.
    */
-  addWord(name: string): boolean {
+  addWord1(name: string): boolean {
     if (!name) { return true; }
 
     let workingWord = this.getWord(name);
