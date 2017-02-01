@@ -32,7 +32,7 @@
     <tbody>
       <tr *ngFor="let word of wordList">
           <td class="col-md-4">{{word.name}}</td>
-          <td>{{word.explanation.lexicalEntries[0].entries[0].senses[0].definitions[0]}}</td>
+          <!--td class="col-md-4">{{word.explanation.lexicalEntries[0].entries[0].senses[0].definitions[0]}}</td -->
           <td>{{word.frequency}}</td>
           <td>
             <input type="button" (click)="deleteWord(word.name)" value="delete" class="btn btn-danger btn-block">

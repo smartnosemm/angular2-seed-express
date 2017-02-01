@@ -10,11 +10,10 @@ export function Init() {
 
   RedisClient.sadd("word-list",
     "longanimity",
-    "eutaxy",
     redis.print);
 
-  //RedisClient.set("longanimity", JSON.stringify(new Word ("longanimity", "Patient endurance", 1)), redis.print);
-  RedisClient.set("eutaxy", JSON.stringify(new Word ("eutaxy", null, 1)), redis.print);
+  RedisClient.set("longanimity", JSON.stringify(new Word ("longanimity", "Patient endurance", 1)), redis.print);
+  //RedisClient.set("eutaxy", JSON.stringify(new Word ("eutaxy", null, 1)), redis.print);
 
   RedisClient.quit();
 }
