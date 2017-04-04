@@ -21,3 +21,8 @@ nav a {
 nav a.router-link-active {
   color: #106cc8;
 }
+
+.login-router {
+  position: absolute;
+  right: 10px
+}

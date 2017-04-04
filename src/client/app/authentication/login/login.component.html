@@ -1,1 +1,34 @@
-<h2>Login</h2>
+<div class="col-md-6 col-md-offset-3">
+    <h2>Login</h2>
+
+    
+
+    <form ngNoForm method="POST">
+        <div class="from-group">
+            <label>Username</label>
+            <input type="text" class="form-control" name="username">
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" class="form-control" name="password">
+        </div>
+
+        <button type="submit" formaction="http://localhost:9001/api/login" class="btn btn-primary btn-md">Login</button>
+        <button type="submit" formaction="http://localhost:9001/api/signup" class="btn btn-primary btn-md">Signup</button>
+    </form>
+    <!--form novalidate (ngSubmit)="login()" [formGroup]="userForm">
+        <div class="from-group">
+            <label>Username</label>
+            <input type="text" class="form-control" formControlName="username">
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" class="form-control" formControlName="password">
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-md">Login</button>
+        <input type="button" (click)="login(username.value, password.value)" value="Login" class="btn btn-primary btn-md" >
+        <input type="button" (click)="logout()" value="Logout" class="btn btn-primary btn-md" >
+    </form-->
+    
+</div>

@@ -5,3 +5,4 @@ export * from './word-list/index';
 export * from './navbar/index';
 export * from './toolbar/index';
 export * from './config/env.config';
+export * from './login/index';
