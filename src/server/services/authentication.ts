@@ -20,9 +20,10 @@ export function authentication(app: express.Application, passportIns: passport.P
   app.post('/api/login', (req:any, res:any, next:any) => {
     passportIns.authenticate('local-login', (err:any, user:any, info:any) => {
       if (err) { return next(err) }
-      if (!user) { return res.redirect('/login') }
-      req.session.key=req.body.username;
-      res.redirect('/');
+      if (!user) { 
+        return res.json(null);
+      }
+      res.json('OK');
     })(req, res, next);
   });
 

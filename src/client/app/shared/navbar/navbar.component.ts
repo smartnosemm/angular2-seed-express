@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { GlobalEventsManager } from '../service/index';
 
 /**
  * This class represents the navigation bar component.
@@ -9,4 +10,19 @@ import { Component } from '@angular/core';
   templateUrl: 'navbar.component.html',
   styleUrls: ['navbar.component.css'],
 })
-export class NavbarComponent { }
+export class NavbarComponent { 
+  showUser: boolean = false;
+  userName: string;
+
+  constructor(private globalEventsManager: GlobalEventsManager) {
+    this.globalEventsManager.showUserEmitter.subscribe((mode)=>{
+      if (mode != null) {
+        this.showUser = true;
+        this.userName = mode;
+      }
+      else {
+        this.showUser = false;
+      }
+    });
+  } 
+}

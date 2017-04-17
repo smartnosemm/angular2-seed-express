@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
-import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { LoginService } from '../../shared/index';
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { LoginService, GlobalEventsManager } from '../../shared/index';
+
+import { User } from '../../common/user';
 
 
 /**
@@ -13,20 +14,47 @@ import { LoginService } from '../../shared/index';
   templateUrl: 'login.component.html',
   styleUrls: ['login.component.css']
 })
-export class LoginComponent { 
+export class LoginComponent implements OnInit { 
 
   errorMessage: string;
-  userForm: FormGroup;
+  user: any = {};
+  returnUrl: string;
+  body: any;
 
-  constructor(public loginService: LoginService, private router: Router, private fb: FormBuilder) {
-    this.createUserForm();
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    public loginService: LoginService,
+    private globalEventsManager: GlobalEventsManager) {}
+  
+  ngOnInit() {
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
-  createUserForm() {
-    this.userForm = this.fb.group({
-      username: [ '', Validators.required ],
-      password: [ '', Validators.required ]
-    });
+  login() {
+    this.loginService.login(this.user.username, this.user.password)
+        .subscribe(
+          data => {
+            if (data == "OK") {
+              this.globalEventsManager.showUserInfo(this.user.username);
+              this.router.navigate([this.returnUrl]);
+            }
+            else {
+              this.router.navigate(['/login']);
+            }
+          },
+          error =>  this.errorMessage = <any>error
+        );
+  }
+
+  logout() {
+    this.loginService.logout()
+      .subscribe(
+        data => {
+            
+          },
+        error =>  this.errorMessage = <any>error
+      );
   }
 
 }

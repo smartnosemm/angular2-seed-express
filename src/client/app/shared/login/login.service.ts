@@ -26,14 +26,17 @@ export class LoginService {
     let options = new RequestOptions({ headers: headers });   
 
     return this.http.post(`${Config.API}/api/login`, body, options)
-                    //.map(this.extractData)
+                    .map(this.extractData)
                     .catch(this.handleError);
   }
 
   logout() {
-    // remove user from local storage to log user out
-    //localStorage.removeItem('currentUser');
-    console.log("log out");
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });   
+
+    return this.http.post(`${Config.API}/api/login`, null, options)
+                    //.map(this.extractData)
+                    .catch(this.handleError);
   }
 
   private extractData(res: Response) {

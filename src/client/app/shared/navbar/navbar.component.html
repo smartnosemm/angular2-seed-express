@@ -1,7 +1,14 @@
 <nav>
   <a [routerLink]="['/']" [routerLinkActive]="['router-link-active']" [routerLinkActiveOptions]="{exact:true}">HOME</a>
   <a [routerLink]="['/about']" [routerLinkActive]="['router-link-active']" [routerLinkActiveOptions]="{exact:true}">ABOUT</a>
-
-  <a class="login-router" [routerLink]="['/login']" [routerLinkActive]="['router-link-active']" [routerLinkActiveOptions]="{exact:true}">Login/Signup</a>
+  
+  <div *ngIf="showUser">Hello, {{userName}}
+    <a class="navbar-brand pull-right" [routerLink]="['/login']" [routerLinkActive]="['router-link-active']" [routerLinkActiveOptions]="{exact:true}">Logout</a>  
+  </div>
+  <div *ngIf="!showUser">
+    <a class="login-router" [routerLink]="['/login']" [routerLinkActive]="['router-link-active']" [routerLinkActiveOptions]="{exact:true}">Login/Signup</a>  
+  </div>
 </nav>
+
+
 

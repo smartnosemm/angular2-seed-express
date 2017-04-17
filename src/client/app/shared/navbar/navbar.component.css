@@ -22,6 +22,22 @@ nav a.router-link-active {
   color: #106cc8;
 }
 
+div {
+  color: #106cc8;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 48px;
+  margin-right: 20px;
+  text-decoration: none;
+  position: absolute;
+  top: 48px;
+  right: 120px
+}
+
+.logout {
+  line-height: 48px;
+}
+
 .login-router {
   position: absolute;
   right: 10px
