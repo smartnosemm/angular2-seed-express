@@ -24,7 +24,7 @@ export function passportConfig(passportIns: passport.Passport) {
         done(null, user);
     });
 
-    passportIns.use('local-signup', new LocalStrategy({
+    passportIns.use('local-register', new LocalStrategy({
         usernameField: 'username',
         passwordField: 'password',
         passReqToCallback: true

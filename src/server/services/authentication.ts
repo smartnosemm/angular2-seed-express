@@ -28,11 +28,13 @@ export function authentication(app: express.Application, passportIns: passport.P
   });
 
  
-  app.post('/api/signup', (req:any, res:any, next:any) => {
-    passportIns.authenticate('local-signup', (err:any, user:any, info:any) => {
+  app.post('/api/register', (req:any, res:any, next:any) => {
+    passportIns.authenticate('local-register', (err:any, user:any, info:any) => {
       if (err) { return next(err) }
-      req.session.key=req.body.username;
-      res.redirect('/');
+      if (!user) { 
+        return res.json(null);
+      }
+      res.json('OK');
     })(req, res, next);
   });
 
@@ -41,46 +43,18 @@ export function authentication(app: express.Application, passportIns: passport.P
     })
   );
 
-  app.get('/logout',
+  app.post('/api/logout',
     (req:any, res:any) => {
       req.logout();
-      res.redirect('/');
+      req.session.destroy();
+      res.json('logout');
     }
   );
 
   function isLoggedIn(req:any, res:any, next:any) {
     if (req.isAuthenticated())
       return next();
-    res.redirect('/signup');
+    res.redirect('/login');
   }
-
-  /**
-   * Post login.
-   
-  app.post('/api/login',
-    (req:any, res:any, next:any) => {
-
-      let RedisClient = redis.createClient(),
-          request = req.body;
-
-      // Check if user exists
-      RedisClient.hget('localusers', request.username,
-        (err:any, replies:any) => {
-          if (err) {
-            RedisClient.quit();
-            return res.send(err);
-          }
-          
-          let password = replies;
-          if (password == request.password) {
-            res.json({success: true});
-          }
-          else res.json({success: false});
-        });   
-
-        RedisClient.quit();     
-    });
-  */
-
  
 }

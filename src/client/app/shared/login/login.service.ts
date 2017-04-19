@@ -30,12 +30,22 @@ export class LoginService {
                     .catch(this.handleError);
   }
 
+  register(username: string, password: string): Observable<string> {
+    let body = JSON.stringify( {username:username, password:password} );
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });   
+
+    return this.http.post(`${Config.API}/api/register`, body, options)
+                    .map(this.extractData)
+                    .catch(this.handleError);
+  }
+
   logout() {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });   
 
-    return this.http.post(`${Config.API}/api/login`, null, options)
-                    //.map(this.extractData)
+    return this.http.post(`${Config.API}/api/logout`, null, options)
+                    .map(this.extractData)
                     .catch(this.handleError);
   }
 

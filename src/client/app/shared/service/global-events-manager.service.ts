@@ -9,7 +9,7 @@ import { Observable } from 'rxjs/Observable';
 export class GlobalEventsManager {
 
   private showUser: BehaviorSubject<string> = new BehaviorSubject<string>(null);
-  public showUserEmitter: Observable<boolean> = this.showUser.asObservable();
+  public showUserEmitter: Observable<string> = this.showUser.asObservable();
 
   constructor() {}
 

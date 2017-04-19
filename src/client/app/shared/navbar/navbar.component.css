@@ -35,6 +35,11 @@ div {
 }
 
 .logout {
+  color: #8f8f8f;
+  background: none;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
   line-height: 48px;
 }
 

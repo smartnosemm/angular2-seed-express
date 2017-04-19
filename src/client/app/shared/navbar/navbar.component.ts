@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { GlobalEventsManager } from '../service/index';
+import { LoginService } from '../login/index'
 
 /**
  * This class represents the navigation bar component.
@@ -13,8 +15,13 @@ import { GlobalEventsManager } from '../service/index';
 export class NavbarComponent { 
   showUser: boolean = false;
   userName: string;
+  errorMessage: string;
 
-  constructor(private globalEventsManager: GlobalEventsManager) {
+  constructor(
+    public loginService: LoginService, 
+    private router: Router,
+    private globalEventsManager: GlobalEventsManager) 
+    {
     this.globalEventsManager.showUserEmitter.subscribe((mode)=>{
       if (mode != null) {
         this.showUser = true;
@@ -25,4 +32,17 @@ export class NavbarComponent {
       }
     });
   } 
+
+  logout() {
+    this.loginService.logout()
+      .subscribe(
+        data => {
+            if (data == "logout") {
+              this.globalEventsManager.showUserInfo(null);
+              this.router.navigate(['/login']);
+            }
+          },
+        error =>  this.errorMessage = <any>error
+      );
+  }
 }

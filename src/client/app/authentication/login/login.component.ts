@@ -20,6 +20,8 @@ export class LoginComponent implements OnInit {
   user: any = {};
   returnUrl: string;
   body: any;
+  userExists: boolean = false;
+  somethingWrong: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -38,23 +40,33 @@ export class LoginComponent implements OnInit {
             if (data == "OK") {
               this.globalEventsManager.showUserInfo(this.user.username);
               this.router.navigate([this.returnUrl]);
+              this.somethingWrong = false;
             }
             else {
               this.router.navigate(['/login']);
+              this.somethingWrong = true;
             }
           },
           error =>  this.errorMessage = <any>error
         );
   }
 
-  logout() {
-    this.loginService.logout()
-      .subscribe(
-        data => {
-            
+  register(){
+    this.loginService.register(this.user.username, this.user.password)
+        .subscribe(
+          data => {
+            if (data == "OK") {
+              this.globalEventsManager.showUserInfo(this.user.username);
+              this.router.navigate([this.returnUrl]);
+              this.userExists = false;
+            }
+            else {
+              this.router.navigate(['/login']);
+              this.userExists = true;
+            }
           },
-        error =>  this.errorMessage = <any>error
-      );
+          error =>  this.errorMessage = <any>error
+        );
   }
 
 }
