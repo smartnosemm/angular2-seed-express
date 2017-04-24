@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 /**
- * This class represents the lazy loaded AboutComponent.
+ * This class represents the lazy loaded UserDetailComponent.
  */
 @Component({
   moduleId: module.id,

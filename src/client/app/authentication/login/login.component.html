@@ -14,7 +14,7 @@
         <button type="submit" formaction="http://localhost:9001/api/login" class="btn btn-primary btn-md">Login</button>
         <button type="submit" formaction="http://localhost:9001/api/signup" class="btn btn-primary btn-md">Signup</button>
     </form-->
-    <div *ngIf="somethingWrong" class="btn-warning">Username/password is wrong!</div>
+    <div *ngIf="somethingWrong" class="alert alert-danger">Oops! Username/password is wrong.</div>
     <form novalidate (ngSubmit)="login()" #loginForm="ngForm">
         <div class="from-group">
             <label for="username">Username</label>
@@ -30,7 +30,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary btn-md">Login</button>
-        <input type="button" (click)="register()" value="Register" class="btn btn-primary btn-md">
+        <button type="button" (click)="register()" value="Register" class="btn btn-primary btn-md">Register</button>
     </form>
     
 </div>

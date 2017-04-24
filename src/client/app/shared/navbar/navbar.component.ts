@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { GlobalEventsManager } from '../service/index';
 import { LoginService } from '../login/index'
 
@@ -14,6 +15,7 @@ import { LoginService } from '../login/index'
 })
 export class NavbarComponent { 
   showUser: boolean = false;
+  isOpen: boolean = false;
   userName: string;
   errorMessage: string;
 
@@ -44,5 +46,9 @@ export class NavbarComponent {
           },
         error =>  this.errorMessage = <any>error
       );
+  }
+
+  dropdown() {
+    this.isOpen = !this.isOpen;
   }
 }
