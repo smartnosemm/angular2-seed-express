@@ -9,7 +9,7 @@
   <div *ngIf="showUser" class="user-login">
     <button type="button" (click)="dropdown()">Hello, {{userName}}</button>
       <ul *ngIf="isOpen">
-        <li><a [href="#"]>HTML</a></li>
+        <li><a [routerLink]="['/profile']" routerLinkActive="active">Your account</a></li>
       </ul>
     <input type="button" (click)="logout()" value="Logout" class="logout">
   </div>

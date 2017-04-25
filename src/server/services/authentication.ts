@@ -38,12 +38,12 @@ export function authentication(app: express.Application, passportIns: passport.P
     })(req, res, next);
   });
 
-  app.get('/api/detail', isLoggedIn, passport.authenticate('user-detail', {
+  app.get('/api/profile', isLoggedIn, passport.authenticate('profile', {
       
     })
   );
 
-  app.post('/api/logout',
+  app.post('/api/profile',
     (req:any, res:any) => {
       req.logout();
       req.session.destroy();

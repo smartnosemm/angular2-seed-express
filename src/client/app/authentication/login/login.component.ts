@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
         .subscribe(
           data => {
             if (data == "OK") {
-              this.globalEventsManager.showUserInfo(this.user.username);
+              this.globalEventsManager.showUserInfo(this.user);
               this.router.navigate([this.returnUrl]);
               this.somethingWrong = false;
             }

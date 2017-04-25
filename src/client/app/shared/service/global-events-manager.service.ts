@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
+import { User } from '../../common/user';
 
 /**
  * This class manages global events.
@@ -8,12 +9,12 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class GlobalEventsManager {
 
-  private showUser: BehaviorSubject<string> = new BehaviorSubject<string>(null);
-  public showUserEmitter: Observable<string> = this.showUser.asObservable();
+  private showUser: BehaviorSubject<User> = new BehaviorSubject<User>(null);
+  public showUserEmitter: Observable<User> = this.showUser.asObservable();
 
   constructor() {}
 
-  showUserInfo(user: string) {
+  showUserInfo(user: User) {
       this.showUser.next(user);
   }
     

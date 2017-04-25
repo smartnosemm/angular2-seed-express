@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { GlobalEventsManager } from '../service/index';
 import { LoginService } from '../login/index'
 
@@ -27,7 +26,7 @@ export class NavbarComponent {
     this.globalEventsManager.showUserEmitter.subscribe((mode)=>{
       if (mode != null) {
         this.showUser = true;
-        this.userName = mode;
+        this.userName = mode.username;
       }
       else {
         this.showUser = false;

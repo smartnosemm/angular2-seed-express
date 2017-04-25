@@ -30,6 +30,8 @@ nav ul {
   height: 38px;
   text-align: center;
   line-height: 100%;
+  cursor: pointer;
+  z-index: 1000;
 }
 
 nav button {
