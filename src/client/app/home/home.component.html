@@ -1,10 +1,44 @@
-<p>Howdy! Here's a list of awesome computer scientists. Do you know any others? Add to the list yourself.</p>
+<div class = "container">
+  <h2>My dictionary</h2>
+  <p>
+    Let's learn new word!
+  </p>
 
-<form (submit)="addName()">
-  <input [(ngModel)]="newName" name="newName" placeholder="Awesome Computer Scientist">
-  <button type="submit">Add</button>
-</form>
+  <div style = "padding: 10px 10px 10px;">
+      <input #newWord />
+      <button (click)="addWord(newWord.value); newWord.value=''">
+        Add
+      </button>
+  </div>
 
-<ul>
-  <li *ngFor="let name of names">{{name}}</li>
-</ul>
+  <table class = "table">
+    <!--
+    <form (submit)="addName()">
+      <input [(ngModel)]="newName" name="newName" placeholder="Awesome Computer Scientist">
+      <button type="submit">Add</button>
+    </form>
+    -->
+
+    <thead>
+      <tr>
+        <th>Word</th>
+        <th>Definition</th>
+        <th>Visited</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let word of wordList">
+          <td class="col-md-4">{{word.name}}</td>
+          <!--td class="col-md-4">{{word.explanation.lexicalEntries[0].entries[0].senses[0].definitions[0]}}</td -->
+          <td>{{word.frequency}}</td>
+          <td>
+            <input type="button" (click)="deleteWord(word.name)" value="delete" class="btn btn-danger btn-block">
+          </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+

@@ -1,0 +1,36 @@
+<div class="col-md-6 col-md-offset-3">
+    <h2>Login</h2>
+
+    <!--form ngNoForm method="POST">
+        <div class="from-group">
+            <label>Username</label>
+            <input type="text" class="form-control" name="username">
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" class="form-control" name="password">
+        </div>
+
+        <button type="submit" formaction="http://localhost:9001/api/login" class="btn btn-primary btn-md">Login</button>
+        <button type="submit" formaction="http://localhost:9001/api/signup" class="btn btn-primary btn-md">Signup</button>
+    </form-->
+    <div *ngIf="somethingWrong" class="alert alert-danger">Oops! Username/password is wrong.</div>
+    <form novalidate (ngSubmit)="login()" #loginForm="ngForm">
+        <div class="from-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" required [(ngModel)]="user.username" name="username" #username="ngModel">
+            <div *ngIf="loginForm.submitted && !username.valid" class="btn-warning">
+                Username is required
+            </div>
+            <div *ngIf="userExists" class="btn-warning">Username already exists!</div>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" name="password" [(ngModel)]="user.password" #password="ngModel">
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-md">Login</button>
+        <button type="button" (click)="register()" value="Register" class="btn btn-primary btn-md">Register</button>
+    </form>
+    
+</div>

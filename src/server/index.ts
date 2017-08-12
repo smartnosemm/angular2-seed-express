@@ -4,8 +4,13 @@ import * as bodyParser from 'body-parser';
 import * as path from 'path';
 import * as compression from 'compression';
 import * as routes from './routes';
+import * as config from './config/passport';
+import * as redis from 'redis';
 
 import { Init } from './db/redis';
+import * as passport from 'passport';
+import * as session from 'express-session';
+import * as connectredis from 'connect-redis';
 
 /**
  * Client Dir
@@ -13,6 +18,8 @@ import { Init } from './db/redis';
  */
 var _clientDir = '../../client/dev';
 var app = express();
+var redisStore = connectredis(session);
+var redisClient = redis.createClient();
 
 export function init(port: number, mode: string) {
 
@@ -24,6 +31,21 @@ export function init(port: number, mode: string) {
   // DB Init
   Init();
 
+  // Passport Init
+  config.passportConfig(passport);
+  app.use(session({ 
+    store: new redisStore({
+      host: 'localhost',
+      port: 6379,
+      client: redisClient
+    }),
+    secret: 'weisidictionary',
+    resave: false,
+    saveUninitialized: false
+  }));
+  app.use(passport.initialize());
+  app.use(passport.session());
+
   /**
    * Dev Mode.
    * @note Dev server will only give for you middleware.
@@ -32,11 +54,11 @@ export function init(port: number, mode: string) {
 
     app.all('/*', function(req, res, next) {
       res.header('Access-Control-Allow-Origin', '*');
-      res.header('Access-Control-Allow-Headers', 'X-Requested-With');
+      res.header('Access-Control-Allow-Headers', 'X-Requested-With, Origin, Content-Type');
       next();
     });
 
-    routes.init(app);
+    routes.init(app, passport);
 
     let root = path.resolve(process.cwd());
     let clientRoot = path.resolve(process.cwd(), './dist/client/dev');
@@ -61,7 +83,7 @@ export function init(port: number, mode: string) {
     /**
      * Api Routes for `Production`.
      */
-    routes.init(app);
+    routes.init(app, passport);
 
     /**
      * Client Dir

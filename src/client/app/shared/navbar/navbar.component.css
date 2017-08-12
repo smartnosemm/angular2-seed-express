@@ -21,3 +21,48 @@ nav a {
 nav a.router-link-active {
   color: #106cc8;
 }
+
+nav ul {
+  background-color: #ffbf80;
+  list-style-type: none;
+  position: absolute;
+  top: 50px;
+  height: 38px;
+  text-align: center;
+  line-height: 100%;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+nav button {
+  color: #8f8f8f;
+  background: none;
+  line-height: 22px;
+  outline: none;
+}
+
+div {
+  color: #106cc8;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 48px;
+  margin-right: 20px;
+  text-decoration: none;
+  position: absolute;
+  top: 48px;
+  right: 120px
+}
+
+.logout {
+  color: #8f8f8f;
+  background: none;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 48px;
+}
+
+.login-router {
+  position: absolute;
+  right: 150px
+}

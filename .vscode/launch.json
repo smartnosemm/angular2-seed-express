@@ -1,6 +1,19 @@
 {
   "version": "0.2.0",
   "configurations": [
+    
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Program",
+      "program": "${workspaceRoot}/app.server.dev.js",
+      "cwd": "${workspaceRoot}",
+      "outFiles": [
+        "${wordspaceRoot}/dist/server/**/*.js"
+      ],
+      "sourceMaps": true
+    }
+    /*
     {
       "name": "Launch Chrome against localhost, with sourcemaps",
       "type": "chrome",
@@ -23,6 +36,6 @@
       "sourceMapPathOverrides": {
         "app/*": "${webRoot}/app/*"
       }
-    }
+    }  */
   ]
 }
